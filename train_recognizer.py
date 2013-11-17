@@ -8,7 +8,7 @@ count up number of times there is a relative maximum on a frequency over a sound
 normalize the number
 use in regression model?? minimum edit distance?
 """
-import get_mfcc
+import deltas
 import sys
 import wave
 from graphics import *
@@ -19,26 +19,51 @@ import array
 from features import mfcc
 from features import fbank
 import scipy.io.wavfile as wav
+import pickle
 
 def main():
-    if len(sys.argv) < 2:
-		sys.stderr.write('Usage: python ' + sys.argv[0] + ' file.wav')
+    # to run: python train_recognizer.py language1.wav language1_name language2.wav language2_name
+    if (len(sys.argv) < 3) or ((len(sys.argv) - 1) % 2 is not 0):
+		print len(sys.argv)
+		print len(sys.argv[1]) 
+		print len(sys.argv[2])
+		for index in range(0, len(sys.argv)):
+		    print sys.argv[index]
+		sys.stderr.write('Usage: python ' + sys.argv[0] + ' [language_data.wav files] [language_names]\n')
 		sys.exit(1)
-    file = sys.argv[1]
+#     file = sys.argv[1]
+    
+    languages = {}
 
-    (rate,sig) = wav.read(file) # returns (sample rate, numpy.ndarray of samples)
+    for index in range(1, len(sys.argv), 2):
+        
+        language = sys.argv[index + 1]
+        
+        file = sys.argv[index]
+        (rate,sig) = wav.read(file)
+        mfcc_feat = mfcc(sig,rate)
+        mfccs_deltas = deltas.get_deltas(mfcc_feat, 0)
+        mfccs_deltas_ddeltas = deltas.get_deltas(mfccs_deltas, 13)
+        avg = deltas.stream_avg(mfccs_deltas_ddeltas)
+        
+        languages[language] = avg
+    
+    print languages
+    pickle.dump(languages, open('languages.dat', 'w'))
+    
+#     (rate,sig) = wav.read(file) # returns (sample rate, numpy.ndarray of samples)
 #     print rate
 #     print sig
 #     print type(sig)
 
-    mfcc_feat = mfcc(sig,rate)
-    deltas = deltas.get_deltas(mfcc_feat, 0)
-    double_deltas = deltas.get_deltas(deltas, 13)
-    avg = deltas.stream_avg(double_deltas)
-    print mfcc_feat
-    print deltas
-    print double_deltas
-    print avg
+#     mfcc_feat = mfcc(sig,rate)
+#     deltas = deltas.get_deltas(mfcc_feat, 0)
+#     double_deltas = deltas.get_deltas(deltas, 13)
+#     avg = deltas.stream_avg(double_deltas)
+#     print mfcc_feat
+#     print deltas
+#     print double_deltas
+#     print avg
     
 #     file.close()
 
