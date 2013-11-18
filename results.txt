@@ -1,0 +1,110 @@
+results:
+
+trained on obama_1:
+    
+    english_obama_2
+    russian_obama_2
+    french_obama_2
+
+    english_obama_3     english : 18.6955588778
+                        french : 19.1159992756
+                        russian : 21.2552070096
+    russian_obama_3
+    french_obama_3
+    
+    english_sweden_1
+    russian_sweden_1
+    french_sweden_1
+    
+    english_sweden_2
+    russian_sweden_2
+    french_sweden_2    
+    
+    english_sweden_3    russian : 17.5912183028
+                        french : 22.2791045641
+                        english : 31.001875833
+    russian_sweden_3
+    french_sweden_3
+    
+
+------------------------------------
+
+russian_obama_clean_2.wav languages_obama_1_sweden_1.dat
+
+                        russian : 13.8912636421
+english : 17.8536236463
+french : 23.626144707
+
+russian_obama_clean_3.wav languages_obama_1_sweden_1.dat
+
+french : 17.35822028
+russian : 17.5472426513
+english : 31.511977103
+
+russian_sweden_clean_2.wav languages_obama_1_sweden_1.dat
+
+                        russian : 13.3179863588
+french : 17.9872423369
+english : 28.9654344807
+
+russian_sweden_clean_3.wav languages_obama_1_sweden_1.dat
+
+                        russian : 14.8480209374
+french : 16.8705423178
+english : 27.5728287787
+
+
+------------------------------------
+
+
+french_obama_clean_2.wav languages_obama_1_sweden_1.dat
+
+                        french : 12.996619765
+russian : 14.2901645739
+english : 28.0863814146
+
+french_obama_clean_3.wav languages_obama_1_sweden_1.dat
+
+                        french : 15.7428445346
+russian : 20.9371015955
+english : 33.5901308001
+
+french_sweden_clean_2.wav languages_obama_1_sweden_1.dat
+
+                        french : 11.7804579241
+russian : 20.6852642301
+english : 25.7942004961
+
+french_sweden_clean_3.wav languages_obama_1_sweden_1.dat
+
+                        french : 9.58565254794
+russian : 14.4072345394
+english : 23.4059526658
+
+
+------------------------------------
+
+
+english_obama_clean_2.wav languages_obama_1_sweden_1.dat
+
+                        russian : 21.5407978522
+english : 24.288935758
+french : 27.6377264439
+
+english_obama_clean_3.wav languages_obama_1_sweden_1.dat
+
+                        russian : 18.5762342157
+english : 19.7605430578
+french : 24.5209028282
+
+english_sweden_clean_2.wav languages_obama_1_sweden_1.dat
+
+                        english : 20.8916521688
+french : 27.348960701
+russian : 29.2880017534
+
+english_sweden_clean_3.wav languages_obama_1_sweden_1.dat
+
+                        english : 14.8033125031
+french : 21.727995942
+russian : 22.5886084343

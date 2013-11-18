@@ -22,11 +22,7 @@ def main():
 		sys.exit(1)
     file = sys.argv[1]
     
-    
     (rate,sig) = wav.read(file) # returns (sample rate, numpy.ndarray of samples)
-#     print rate
-#     print sig
-#     print type(sig)
 
     mfcc_feat = mfcc(sig,rate)
     deltas = get_deltas(mfcc_feat, 0)
@@ -52,7 +48,7 @@ def main():
     print deltas[3, 14:26]
     print double_deltas[3, 14:26]
 #     print len(deltas[1000])
-    print stream_avg(double_deltas)
+    print col_avg(double_deltas)
 
 def get_deltas(matrix, index):
     
@@ -60,15 +56,19 @@ def get_deltas(matrix, index):
         length = 26
     else: # if adding double deltas
         length = 39
+    
+    rows = numpy.shape(matrix)[0]  
     cols = numpy.shape(matrix)[1]
-    rows = numpy.shape(matrix)[0]
+    
     new_matrix = numpy.zeros((rows, length))
-    new_matrix[:2, :index + 13] = matrix[:2,]
+    
+    new_matrix[:2, :index + 13] = matrix[:2,] # can't 
     new_matrix[-2:, :index + 13] = matrix[-2:,]
     
     # for each window
     for i in range(2, rows - 2):
 
+        # copy over existing values (mfcc's or mfcc's + deltas)
         new_matrix[i, :index + 13] = matrix[i]
         
         # for each value in row (each mfcc or delta)
@@ -85,10 +85,10 @@ def get_deltas(matrix, index):
 
     return new_matrix
 
-def stream_avg(matrix):
-    rows = numpy.shape(matrix)[0]
-    colsums = numpy.cumsum(matrix, 0)[rows - 1] # sum over all rows
-    colmeans = colsums/rows
+def col_avg(matrix):
+    num_rows = numpy.shape(matrix)[0]
+    colsums = numpy.cumsum(matrix, 0)[num_rows - 1] # sum over all rows
+    colmeans = colsums / float(num_rows) # average over all rows
     return colmeans
 
 if __name__ == "__main__":
