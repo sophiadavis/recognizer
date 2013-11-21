@@ -23,13 +23,12 @@ import scipy.spatial.distance
 import pickle
 
 def main():
-    if len(sys.argv) < 3:
-		sys.stderr.write('Usage: python ' + sys.argv[0] + ' lang_test.wav', ' data_file.dat')
+    if len(sys.argv) < 2:
+		sys.stderr.write('Usage: python ' + sys.argv[0] + ' lang_test.wav')
 		sys.exit(1)
     file = sys.argv[1]
-    data = sys.argv[2]
     
-    languages = pickle.load( open(data, 'r') )
+    languages = pickle.load( open('languages.dat', 'r') )
 
     (rate,sig) = wav.read(file) # returns (sample rate, numpy.ndarray of samples)
     mfcc_feat = mfcc(sig,rate)
@@ -45,9 +44,11 @@ def main():
     sorted = results.keys()
     sorted.sort()
     print
-    for dist in sorted:
-        print results[dist], ':', dist
-    print
+    language = results[sorted[0]]
+    sys.stdout.write(language)
+#     for dist in sorted:
+#         print results[dist], ':', dist
+#     print
 
 def get_distance(known, test):
     return scipy.spatial.distance.euclidean(known, test)

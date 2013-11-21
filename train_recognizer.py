@@ -17,7 +17,7 @@ import pickle
 
 def main():
     
-    # to run: python train_recognizer.py language1.wav language1_name language2.wav language2_name
+    # to run: python train_recognizer.py language1.wav language1_name language2.wav language2_name ... 
     if (len(sys.argv) < 3) or ((len(sys.argv) - 1) % 2 is not 0):
 		sys.stderr.write('Usage: python ' + sys.argv[0] + "' language_data.wav' 'language_names'\n")
 		sys.exit(1)
@@ -46,10 +46,10 @@ def main():
         else:
             languages[language] = avg
     
-    for language in languages.keys():
-        print languages[language]
-        print len(languages[language])
-    pickle.dump(languages, open('languages_obama_1_sweden_1.dat', 'w'))
+#     for language in languages.keys():
+#         print languages[language]
+#         print len(languages[language])
+    pickle.dump(languages, open('languages.dat', 'w'))
     print
     
 if __name__ == "__main__":
