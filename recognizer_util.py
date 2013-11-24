@@ -118,7 +118,7 @@ def get_spectrum_max_freqs((sampling_rate, stream_converted), window_len_ms = 25
             real = numpy.real(dft_values[i])
             imag = numpy.imag(dft_values[i])
             sq_mag = math.sqrt(math.pow(real, 2) + math.pow(imag, 2))
-            mag = 10*math.log10(sq_mag)
+            mag = 2 * sq_mag/samps_per_window
             if  (mag > window_max):
                 window_max = mag
                 max_freq = i/(window_len_ms/1000.0)

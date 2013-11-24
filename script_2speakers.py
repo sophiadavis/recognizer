@@ -10,6 +10,7 @@ train on one obama and one swedish sentence per language
 
 """
 def main():
+    codebook = False
     
     en_1 = [
     'english_obama_clean_1.wav',
@@ -80,7 +81,7 @@ def main():
     num_trials = 0
     num_training_sets = 0
     
-    while num_training_sets < 50:
+    while num_training_sets < 10:
         print num_training_sets
         training = random.choice(training_combos)
         training_combos.remove(training)
@@ -96,12 +97,18 @@ def main():
             test.remove(file_1)
             test.remove(file_2)
 
-        os.system("python train_recognizer.py " + command)
+        if codebook:
+            os.system("python train_recognizer_codebook.py " + command)
+        else:
+            os.system("python train_recognizer.py " + command)
         
         
         for file in test:
             print 'testing: ' + file
-            language = subprocess.check_output(["python", "recognizer.py", file]).strip('\n')
+            if codebook:
+                language = subprocess.check_output(["python", "recognizer_codebook.py", file]).strip('\n')
+            else:
+                language = subprocess.check_output(["python", "recognizer.py", file]).strip('\n')
             if re.search(language, file):
                 print 'true', language, file
                 correct.append([language, file])
@@ -110,7 +117,7 @@ def main():
                 wrong.append([language, file])
             print '---'
             num_trials += 1
-    
+
     print
     print '**********'
     print 'TRIALS: ', num_trials
@@ -124,58 +131,6 @@ def main():
         print item
     print '**********'
     print
-    
-#   # another test method    
-#   # each file is used in only one training set (36 total training sets)
-#    
-#     while en_1:
-#     
-#         en_train_1 = random.choice(en_1)
-#         en_train_2 = random.choice(en_2)
-#         
-#         fr_train_1 = random.choice(fr_1)
-#         fr_train_2 = random.choice(fr_2)
-#         
-#         ru_train_1 = random.choice(ru_1)
-#         ru_train_2 = random.choice(ru_2)
-#         
-#         training = en_train_1 + ' english ' + en_train_2 + ' english ' + \
-#                 fr_train_1 + ' french ' + fr_train_2 + ' french ' + \
-#                 ru_train_1 + ' russian ' + ru_train_2 + ' russian'
-#         
-#         test = list(test_options)
-#         test.remove(en_train_1)
-#         test.remove(en_train_2)
-#         test.remove(fr_train_1)
-#         test.remove(fr_train_2)
-#         test.remove(ru_train_1)
-#         test.remove(ru_train_2)
-#         
-#         print '---'
-#         print training
-#         print '-'
-#         print test
-#         print '---'
-#                 
-#         os.system("python train_recognizer.py " + training)
-#         
-#         for file in test:
-#             print 'testing: ' + file
-#             language = subprocess.check_output(["python", "recognizer.py", file]).strip('\n')
-#             if re.search(language, file):
-#                 print 'true', language, file
-#             else:
-#                 print 'false', language, file
-#             print '---'
-#             
-#         
-#         en_1.remove(en_train_1)
-#         en_2.remove(en_train_2)
-#         fr_1.remove(fr_train_1)
-#         fr_2.remove(fr_train_2)
-#         ru_1.remove(ru_train_1)
-#         ru_2.remove(ru_train_2)
-    
 
 if __name__ == "__main__":
     main()

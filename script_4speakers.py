@@ -10,6 +10,7 @@ train on one obama and one swedish sentence per language
 
 """
 def main():
+    codebook = True
   
     en_1 = [
     'english_obama_clean_1.wav',
@@ -129,12 +130,18 @@ def main():
             test.remove(file_2)
             test.remove(file_3)
             test.remove(file_4)
-
-        os.system("python train_recognizer.py " + command)
+        
+        if codebook:
+            os.system("python train_recognizer_codebook.py " + command)
+        else:
+            os.system("python train_recognizer.py " + command)
         
         for file in test:
             print 'testing: ' + file
-            language = subprocess.check_output(["python", "recognizer.py", file]).strip('\n')
+            if codebook:
+                language = subprocess.check_output(["python", "recognizer_codebook.py", file]).strip('\n')
+            else:
+                language = subprocess.check_output(["python", "recognizer.py", file]).strip('\n')
             if re.search(language, file):
                 print 'true', language, file
                 correct.append([language, file])

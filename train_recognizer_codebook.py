@@ -10,6 +10,7 @@ from features import mfcc
 import scipy.io.wavfile as wav
 import pickle
 import math
+# import pudb; pu.db
 
 def main():
     
@@ -22,13 +23,8 @@ def main():
     highest_freq = 3500.0 # the files I'm using have a sampling rate of 48000
     lowest_freq = 200.0
     n_bins = 7
-    mel_binning = False
+    mel_binning = True
     
-    intervals = recognizer_util.get_intervals(highest_freq, lowest_freq, n_bins, mel_binning)
-    intervals_list = sorted(intervals.keys())
-    
-    print intervals_list
-
     languages = {}
     
     print
@@ -46,41 +42,80 @@ def main():
         mfccs_deltas_ddeltas = recognizer_util.get_deltas(mfccs_deltas, 13)
         spectrum_max_freqs = recognizer_util.get_spectrum_max_freqs((rate,sig))
         
-        n_rows = numpy.shape(mfccs_deltas_ddeltas)[0]
+        intervals = recognizer_util.get_intervals(highest_freq, lowest_freq, n_bins, mel_binning)
+        intervals_list = sorted(intervals.keys())
         
+        n_rows = numpy.shape(mfccs_deltas_ddeltas)[0]
+        stop = False
         for i in range(2, n_rows - 2):
+            print i
+            print mfccs_deltas_ddeltas[i,]
+            print type(mfccs_deltas_ddeltas[i,])
+            print len(mfccs_deltas_ddeltas[i,])
             max_freq = spectrum_max_freqs[i]
-            vector = mfccs_deltas_ddeltas[i,]
             if (max_freq < highest_freq) and (max_freq > lowest_freq): # not dealing with freqs outside human voice range
                 interval = recognizer_util.find_bin(max_freq, intervals_list)
+                if interval == 3026.0:
+                    stop = True
+                    print 'STOP'
+                else:
+                    stop = False
                 if intervals[interval] is None:
                     intervals[interval] = mfccs_deltas_ddeltas[i,]
+                    if stop:
+                        print 'in if'
+                        print mfccs_deltas_ddeltas[i,]
+                        print intervals[interval]
+                        stop = False
                 else:
                     current = intervals[interval]
                     intervals[interval] = numpy.vstack((current, mfccs_deltas_ddeltas[i,]))
+                    print 'TYPE:', type(intervals[interval])
+                    if stop:
+                        print 'in else'
+                        print current
+                        print intervals[interval]
+
             else:
                 continue # if its not human voice, skip it
             
         for interval in intervals.keys():
+            print interval
             current = intervals[interval]
             if current is None:
                 intervals[interval] = numpy.zeros((1,39))
             else:
-                intervals[interval] = recognizer_util.col_avg(current)
+                print language
+                print current
+                print 'current: ', numpy.shape(current)
+                print type(current)
+                if numpy.shape(current) == (39,): # awkward workaround, but I have no idea why this is happening
+                    intervals[interval] = numpy.transpose(current)
+                else:
+                    intervals[interval] = recognizer_util.col_avg(current)
+                print 'saving: ', intervals[interval]
+                print
                     
         if language in languages.keys():
+            print intervals_list
             for interval in intervals_list:
+                print interval
+                print 'numpy.shape(languages[language][interval]): ', numpy.shape(languages[language][interval])
+                print 'numpy.shape(intervals[interval]): ', numpy.shape(intervals[interval])
+                print languages[language][interval]
+                print intervals[interval]
                 array = numpy.vstack((languages[language][interval], intervals[interval]))
                 new_avg = recognizer_util.col_avg(array)
                 languages[language][interval] = new_avg
         else:
             languages[language] = intervals
+#             print 'problem:', languages[language][3026.0]
             
     # uncomment if you want to see the dictionaries
     for language in languages.keys():
         print language
         print languages[language]
-    pickle.dump(languages, open('languages.dat', 'w'))
+    pickle.dump(languages, open('languages_codebook.dat', 'w'))
     print
     
 if __name__ == "__main__":
