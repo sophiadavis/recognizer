@@ -130,5 +130,40 @@ def get_spectrum_max_freqs((sampling_rate, stream_converted), window_len_ms = 25
         
     return max_freqs
 
+def get_intervals(highest_freq, lowest_freq, n_bins, mel_binning = True):
+    
+    highest_freq_mels = math.floor(1125 * math.log(1 + highest_freq/700))
+    lowest_freq_mels = math.floor(1125 * math.log(1 + lowest_freq/700))
+    
+    intervals = {}
+    
+    step_freq = (highest_freq - lowest_freq)/n_bins
+    step_mels = (highest_freq_mels - lowest_freq_mels)/n_bins
+    
+    start_freq = lowest_freq + step_freq
+    start_mels = lowest_freq_mels + step_mels
+    
+    if mel_binning:    
+        while start_mels < highest_freq_mels:
+            start_freq = math.floor(700 * (math.exp(start_mels/1125) - 1))
+            intervals[start_freq] = None
+            start_mels += step_mels
+        intervals[highest_freq] = None
+        
+    else:
+        while start_freq < highest_freq:
+            start_freq = math.floor(start_freq)
+            intervals[start_freq] = None
+            start_freq += step_freq
+        intervals[highest_freq] = None
+        
+    return intervals
+
+def find_bin(value, end_pts):
+    for n in end_pts:
+        if value > n:
+            continue    
+        return n
+
 if __name__ == "__main__":
     main()
