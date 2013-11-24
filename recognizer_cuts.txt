@@ -254,3 +254,30 @@
 #         inverse_cov = linalg.inv(cov)
 #         return scipy.spatial.distance.mahalanobis(known, test, inverse_cov)
 
+#                     combo = [fr_1_file, fr_2_file, fr_3_file, fr_4_file]
+#                     chosen = ['french']
+#                     for i in range(0,3):
+#                         choice = random.choice(combo)
+#                         chosen.append(choice)
+#                         combo.remove(choice)
+#                     print combo
+#                     fr_combos.append(chosen)
+#                     print chosen
+#                     print
+#                     test_options.append(combo[0])
+
+
+#                     combo = ['russian', ru_1_file, ru_2_file, ru_3_file, ru_4_file]
+#                     chosen = ['russian']
+#                     for i in range(0,3):
+#                         choice = random.choice(combo)
+#                         chosen.append(choice)
+#                         combo.remove(choice)
+# #                         print choice
+# #                         print combo
+#                     print combo
+#                     ru_combos.append(chosen)
+#                     print chosen
+#                     print
+#                     test_options.append(combo[0])
+

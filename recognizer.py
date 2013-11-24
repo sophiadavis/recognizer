@@ -10,14 +10,8 @@ use in regression model?? minimum edit distance?
 """
 import deltas
 import sys
-# import wave
-# from graphics import *
-# import Tkinter as TK
 import numpy
-# import math
-# import array
 from features import mfcc
-# from features import fbank
 import scipy.io.wavfile as wav
 import scipy.spatial.distance
 import pickle
@@ -45,10 +39,12 @@ def main():
     sorted.sort()
     print
     language = results[sorted[0]]
-    sys.stdout.write(language)
-#     for dist in sorted:
-#         print results[dist], ':', dist
-#     print
+    sys.stdout.write(language) 
+    print
+    # below code allows you to see euclidean distance between test data and each language model
+    for dist in sorted:
+        print results[dist], ':', dist
+    print
 
 def get_distance(known, test):
     return scipy.spatial.distance.euclidean(known, test)

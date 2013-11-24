@@ -45,34 +45,47 @@ def main():
             list(fr_1) + list(fr_2) + \
             list(ru_1) + list(ru_2)
     
+    # this test method finds all possible permutations of the files to train on
+    # there are 3^7 = 2187 total sets, so it would take over 40 hours to train/test all...
+    
+    # total permutations of english files (1 from each speaker)
     en_combos = []
     for en_1_file in en_1:
         for en_2_file in en_2:
             en_combos.append(['english', en_1_file, en_2_file])
-            
+    
+    # total permutations of french files (1 from each speaker)        
     fr_combos = []
     for fr_1_file in fr_1:
         for fr_2_file in fr_2:
             fr_combos.append(['french', fr_1_file, fr_2_file])
-            
+    
+    # total permutations of russian files (1 from each speaker)    
     ru_combos = []
     for ru_1_file in ru_1:
         for ru_2_file in ru_2:
             ru_combos.append(['russian', ru_1_file, ru_2_file])
     
+    # all permutations between languages
     training_combos = []
     for en in en_combos:
         for fr in fr_combos:
             for ru in ru_combos:
                 training_combos.append([en, fr, ru])
     
+    # train and test some of the sets formed above
     correct = []
     wrong = []
     
     num_trials = 0
-    for training in training_combos:
-#         print training
-#         
+    num_training_sets = 0
+    
+    while num_training_sets < 50:
+        print num_training_sets
+        training = random.choice(training_combos)
+        training_combos.remove(training)
+        num_training_sets += 1
+        
         command = ''
         test = list(test_options)
         for lang_set in training:
@@ -112,8 +125,9 @@ def main():
     print '**********'
     print
     
-    
-    
+#   # another test method    
+#   # each file is used in only one training set (36 total training sets)
+#    
 #     while en_1:
 #     
 #         en_train_1 = random.choice(en_1)

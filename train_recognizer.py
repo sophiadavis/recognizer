@@ -45,10 +45,11 @@ def main():
             languages[language] = new_avg
         else:
             languages[language] = avg
-    
-#     for language in languages.keys():
-#         print languages[language]
-#         print len(languages[language])
+            
+    # uncomment if you want to see the dictionaries
+    for language in languages.keys():
+        print languages[language]
+        print len(languages[language])
     pickle.dump(languages, open('languages.dat', 'w'))
     print
     

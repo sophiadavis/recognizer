@@ -110,27 +110,26 @@ def main():
     num_trials = 0
     num_training_sets = 0
     
-    while num_training_sets < 200:
+    while num_training_sets < 50:
         print num_training_sets
         training = random.choice(training_combos)
         training_combos.remove(training)
         num_training_sets += 1
         
         command = ''
-        test = []
+        test = list(test_options)
         for lang_set in training:
-            lang_set = list(lang_set)
             language = lang_set[0]
-            lang_set.remove(language)
-            for i in range(0,3):
-                choice = random.choice(lang_set)
-                command = command + ' ' + choice + ' ' + language + ' '
-                lang_set.remove(choice)
-            test.append(lang_set[0])
+            file_1 = lang_set[1]
+            file_2 = lang_set[2]
+            file_3 = lang_set[3]
+            file_4 = lang_set[4]
+            command = command + ' ' + file_1 + ' ' + language + ' ' + file_2 + ' ' + language + ' ' + file_3 + ' ' + language + ' ' + ' ' + file_4 + ' ' + language
+            test.remove(file_1)
+            test.remove(file_2)
+            test.remove(file_3)
+            test.remove(file_4)
 
-#         print 'command:' ,command
-#         print
-#     print test
         os.system("python train_recognizer.py " + command)
         
         for file in test:
