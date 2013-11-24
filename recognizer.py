@@ -8,7 +8,7 @@ count up number of times there is a relative maximum on a frequency over a sound
 normalize the number
 use in regression model?? minimum edit distance?
 """
-import deltas
+import recognizer_util
 import sys
 import numpy
 from features import mfcc
@@ -26,9 +26,9 @@ def main():
 
     (rate,sig) = wav.read(file) # returns (sample rate, numpy.ndarray of samples)
     mfcc_feat = mfcc(sig,rate)
-    mfccs_deltas = deltas.get_deltas(mfcc_feat, 0)
-    mfccs_deltas_ddeltas = deltas.get_deltas(mfccs_deltas, 13)
-    test_avg = deltas.col_avg(mfccs_deltas_ddeltas)
+    mfccs_deltas = recognizer_util.get_deltas(mfcc_feat, 0)
+    mfccs_deltas_ddeltas = recognizer_util.get_deltas(mfccs_deltas, 13)
+    test_avg = recognizer_util.col_avg(mfccs_deltas_ddeltas)
     
     results = {}
     for language in languages.keys():

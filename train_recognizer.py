@@ -9,7 +9,7 @@ normalize the number
 use in regression model?? minimum edit distance?
 """
 import sys
-import deltas
+import recognizer_util
 import numpy
 from features import mfcc
 import scipy.io.wavfile as wav
@@ -35,13 +35,13 @@ def main():
         
         (rate,sig) = wav.read(file)
         mfcc_feat = mfcc(sig,rate)
-        mfccs_deltas = deltas.get_deltas(mfcc_feat, 0)
-        mfccs_deltas_ddeltas = deltas.get_deltas(mfccs_deltas, 13)
-        avg = deltas.col_avg(mfccs_deltas_ddeltas)
+        mfccs_deltas = recognizer_util.get_deltas(mfcc_feat, 0)
+        mfccs_deltas_ddeltas = recognizer_util.get_deltas(mfccs_deltas, 13)
+        avg = recognizer_util.col_avg(mfccs_deltas_ddeltas)
         
         if language in languages.keys():
             array = numpy.vstack((languages[language], avg))
-            new_avg = deltas.col_avg(array)
+            new_avg = recognizer_util.col_avg(array)
             languages[language] = new_avg
         else:
             languages[language] = avg
