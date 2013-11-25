@@ -1,13 +1,21 @@
 """
-takes in .wav files to train MFCC codebooks
+recognizer.py
+Sophia Davis, for 11/25/2013
+NLP final project
 
-## at each relative maxima on a window, take the average of the features
+This file is used to determine the source language of a test recording, based on 
+comparison to a simple model of differences in spoken language calculated by train_recognizer.py, 
+which trains a model based on speech recordings, and saves the data in a 'languages.dat' 
+pickle file.
 
-bin range of frequencies
-count up number of times there is a relative maximum on a frequency over a sound stream
-normalize the number
-use in regression model?? minimum edit distance?
+Both files calculate the MFCC vector on each 25 ms window in a sound file, 
+and then average MFCC vectors over all windows.
+
+The Euclidean distance is calculated between the average MFCC vector of the test 
+recording and every language in the model. The language pairing with the lowest distance
+is returned as a source language guess. 
 """
+
 import recognizer_util
 import sys
 import numpy
@@ -31,6 +39,7 @@ def main():
     test_avg = recognizer_util.col_avg(mfccs_deltas_ddeltas)
     
     results = {}
+    
     for language in languages.keys():
         dist = get_distance(languages[language], test_avg)
         results[dist] = language
@@ -41,15 +50,14 @@ def main():
     language = results[sorted[0]]
     sys.stdout.write(language) 
     print
-    # below code allows you to see euclidean distance between test data and each language model
-    for dist in sorted:
-        print results[dist], ':', dist
-    print
+    
+    # uncomment to see Euclidean distance between test data and each language model
+#     for dist in sorted:
+#         print results[dist], ':', dist
+#     print
 
 def get_distance(known, test):
     return scipy.spatial.distance.euclidean(known, test)
-
-
     
 if __name__ == "__main__":
     main()

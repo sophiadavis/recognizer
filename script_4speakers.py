@@ -1,17 +1,30 @@
+"""
+script_4speakers.py
+Sophia Davis, for 11/25/2013
+NLP final project
+
+This script trains and tests models of differences in spoken languages based on excerpts 
+from translations of four UN speeches. It calculates all permutations of training sets 
+(consisting of one recording excerpted from all speeches for each language), then randomly 
+picks (n_reps) of these permutations. For each one, it trains a model, then tests the model 
+on all recordings not used to form the model.
+
+The parameter 'codebook' indicates which method should be used to guess the source 
+of the test file:
+If codebook = True, the 'codebook' method will be used (average MFCC vectors from windows 
+where the maximum intensity occurred at similar frequencies).
+If codebook = False, the simple method will be used (average MFCC vectors over all windows).
+"""
+
 import os
 import random
 import subprocess
 import re
-"""
-train on one obama and one swedish sentence per language
-    run recognizer on all other files
-    
-    russian_obama_clean_1
 
-"""
 def main():
-    codebook = True
-  
+    codebook = True # use 'codebook' vs simple method of guessing source of test file
+    n_reps = 10 # number of random permutations of training data to run
+      
     en_1 = [
     'english_obama_clean_1.wav',
     'english_obama_clean_2.wav',
@@ -111,7 +124,7 @@ def main():
     num_trials = 0
     num_training_sets = 0
     
-    while num_training_sets < 50:
+    while num_training_sets < n_reps:
         print num_training_sets
         training = random.choice(training_combos)
         training_combos.remove(training)

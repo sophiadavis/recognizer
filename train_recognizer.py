@@ -1,13 +1,19 @@
 """
-takes in .wav files to train MFCC codebooks
+train_recognizer.py
+Sophia Davis, for 11/25/2013
+NLP final project
 
-## at each relative maxima on a window, take the average of the features
+This file is used to train a simple model of differences in spoken language based on speech 
+recordings, and saves the data in a 'languages.dat' pickle file.
+This pickle file can be used by recognizer.py to determine a guess at the source
+language of a test recording.
 
-bin range of frequencies
-count up number of times there is a relative maximum on a frequency over a sound stream
-normalize the number
-use in regression model?? minimum edit distance?
+Both files calculate the MFCC vector on each 25 ms window in a sound file, 
+and then average MFCC vectors over all windows.
+If multiple recordings from one language are used to form a model,
+the average MFCC vectors from each recording are averaged together.
 """
+
 import sys
 import recognizer_util
 import numpy
@@ -46,10 +52,11 @@ def main():
         else:
             languages[language] = avg
             
-    # uncomment if you want to see the dictionaries
-    for language in languages.keys():
-        print languages[language]
-        print len(languages[language])
+    # uncomment to see dictionaries
+#     for language in languages.keys():
+#         print languages[language]
+#         print len(languages[language])
+
     pickle.dump(languages, open('languages.dat', 'w'))
     print
     
