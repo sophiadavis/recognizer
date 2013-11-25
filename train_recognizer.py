@@ -12,6 +12,8 @@ Both files calculate the MFCC vector on each 25 ms window in a sound file,
 and then average MFCC vectors over all windows.
 If multiple recordings from one language are used to form a model,
 the average MFCC vectors from each recording are averaged together.
+
+to run: python train_recognizer.py language1.wav language1_name language2.wav language2_name ...
 """
 
 import sys
@@ -22,8 +24,7 @@ import scipy.io.wavfile as wav
 import pickle
 
 def main():
-    
-    # to run: python train_recognizer.py language1.wav language1_name language2.wav language2_name ... 
+     
     if (len(sys.argv) < 3) or ((len(sys.argv) - 1) % 2 is not 0):
 		sys.stderr.write('Usage: python ' + sys.argv[0] + "' language_data.wav' 'language_names'\n")
 		sys.exit(1)

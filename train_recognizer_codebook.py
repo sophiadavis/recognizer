@@ -20,6 +20,8 @@ The parameters
     highest_freq 
     lowest_freq -- the highest and lowest frequencies to be considered 
 should be set to the same value in both files.
+
+to run: python train_recognizer_codebook.py language1.wav language1_name language2.wav language2_name ...
 """
 
 import sys
@@ -38,8 +40,7 @@ def main():
     highest_freq = 3500.0 # human vocal range
     lowest_freq = 200.0
     ######
-    
-    # to run: python train_recognizer_codebook.py language1.wav language1_name language2.wav language2_name ... 
+     
     if (len(sys.argv) < 3) or ((len(sys.argv) - 1) % 2 is not 0):
 		sys.stderr.write('Usage: python ' + sys.argv[0] + "' language_data.wav' 'language_names'\n")
 		sys.exit(1)

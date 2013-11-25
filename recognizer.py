@@ -12,8 +12,8 @@ Both files calculate the MFCC vector on each 25 ms window in a sound file,
 and then average MFCC vectors over all windows.
 
 The Euclidean distance is calculated between the average MFCC vector of the test 
-recording and every language in the model. The language pairing with the lowest distance
-is returned as a source language guess. 
+recording and every language in the model. The language in the model which produced the 
+pairing with the lowest distance is returned as a source language guess. 
 """
 
 import recognizer_util
