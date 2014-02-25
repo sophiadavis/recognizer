@@ -35,9 +35,12 @@ russian_sweden_clean_1.wav
 
 
 The following scripts can be used to train and test many permutations of training and test sets:
+
     script_2speakers.py
-    script_3speakers.py (unfamiliar-speaker model)
-    script_4speakers.py
+    
+    ``script_3speakers.py (unfamiliar-speaker model)``
+    
+    ``script_4speakers.py``
     
 
 Sound files are clips of translations of speeches from the Sept. 24th, 2013 UN General Assembly 
