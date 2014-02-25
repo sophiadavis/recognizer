@@ -20,11 +20,17 @@ To test sound recordings:
 
 
 The current languages.dat and languages_codebook.dat have been trained on the following:
+
 english_obama_clean_1.wav
+
 english_sweden_clean_2.wav
+
 french_obama_clean_1.wav
+
 french_sweden_clean_3.wav
+
 russian_obama_clean_2.wav
+
 russian_sweden_clean_1.wav
 
 
