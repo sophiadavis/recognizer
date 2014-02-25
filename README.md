@@ -35,6 +35,7 @@ russian_sweden_clean_1.wav
 
 
 The following scripts can be used to train and test many permutations of training and test sets:
+    
     script_2speakers.py
     
     script_3speakers.py (unfamiliar-speaker model)
