@@ -7,15 +7,15 @@ Final Project for Carleton NLP, Fall 2013
 For detailed information on methods and results, please see [report.pdf](http://sophiadavis.github.io/recognizer/report.pdf)
 
 
-To train models:
+To train models:  
     codebook method:
-        `python train_recognizer_codebook.py language1.wav language1_name language2.wav language2_name ...`
-    simple method:
+        `python train_recognizer_codebook.py language1.wav language1_name language2.wav language2_name ...`  
+    simple method:  
         `python train_recognizer.py language1.wav language1_name language2.wav language2_name ...`
 
-To test sound recordings:
-    codebook method: `python recognizer_codebook.py 'english_obama_clean_1.wav'`
-    simple method: `python recognizer.py 'english_obama_clean_1.wav'`
+To test sound recordings:  
+    codebook method: `python recognizer_codebook.py 'english_obama_clean_1.wav'`  
+    simple method: `python recognizer.py 'english_obama_clean_1.wav'`  
     
 The current `languages.dat` and `languages_codebook.dat` have been trained on the following:  
  
